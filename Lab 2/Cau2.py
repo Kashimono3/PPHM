@@ -1,0 +1,56 @@
+import pandas as pd
+import csv
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+filename = "data.csv"
+df = pd.read_csv(filename)
+print('pandas ')
+print(df)
+print("========================================")
+print("Thông tin dataframe:")
+print(df.info())
+print("========================================")
+print("\n3 dòng đầu tiên:")
+print(df.head(3))
+print("========================================")
+print("\nDòng thứ 5:")
+print(df.iloc[5])
+print("========================================")
+print("\nThông tin dữ liệu null:")
+print(df.isnull().sum())
+print("========================================")
+# Mô tả dữ liệu
+print("\nMô tả dữ liệu:")
+print(df.describe())
+print("========================================")
+# Độ tương đồng giữa các dữ liệu
+print("\nĐộ tương đồng giữa các dữ liệu:")
+print(df.corr())
+print("========================================")
+plt.figure(dpi=130)
+sns.heatmap(df.corr(),annot=True,fmt='.1f')
+print("\nBiểu đồ nhiệt cho thấy độ tương đồng bằng hình ảnh:")
+plt.show()
+print("========================================")
+new_df = df.dropna()
+print("Dữ liệu sau khi loại bỏ các dòng có dữ liệu trống:")
+print(new_df)
+print("========================================")
+df_no_negatives = df[(df >= 0).all(axis=1)]
+print("Dữ liệu sau khi loại bỏ các dòng có giá trị âm:")
+print(df_no_negatives)
+print("========================================")
+print("Lưu tập tin mới tên Clened_data:")
+df = df.dropna()
+df = df[(df>=0).all(axis=1)]
+df.to_csv('cleaned_data.csv',index=False)
+print("========================================")
+print(" hiển thị biểu đồ scatter cho dữ liệu chiều cao và cân nặng:")
+plt.figure(figsize=(8,6))
+plt.scatter(df['height'],df['weight'],color='blue',marker='o')
+plt.title('Scatter Plot of Height vs Weight')
+plt.xlabel('Height (m)')
+plt.ylabel('Weight (kg)')
+plt.grid(True)
+plt.show()
